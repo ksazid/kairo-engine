@@ -12,7 +12,7 @@ permissions:
 jobs:
   certify:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
@@ -22,6 +22,8 @@ jobs:
           node-version: '22'
       - name: Install pinned dependencies
         run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Install fallback Chromium
+        run: npx playwright install --with-deps chromium
       - name: Build
         run: npm run build
       - name: Deterministic tests
