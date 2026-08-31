@@ -10,7 +10,8 @@
   },
   "engines": { "node": ">=22" },
   "dependencies": {
-    "cheerio": "1.1.2"
+    "cheerio": "1.1.2",
+    "playwright": "1.62.1"
   },
   "devDependencies": {
     "@types/node": "24.3.0",
