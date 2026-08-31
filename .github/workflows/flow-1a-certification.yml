@@ -1,0 +1,37 @@
+name: Flow 1A Public Source Certification
+
+on:
+  push:
+    branches:
+      - feat/flow-1a-public-source-certification
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  certify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install pinned dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Build
+        run: npm run build
+      - name: Deterministic tests
+        run: npm test
+      - name: Live website certification
+        run: npm run certify:websites
+      - name: Print certification report
+        if: always()
+        run: |
+          if [ -f certification-results.json ]; then
+            cat certification-results.json
+          fi
