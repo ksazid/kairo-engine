@@ -1,4 +1,5 @@
 export type EvidenceState = "confirmed" | "inferred" | "unknown" | "conflicting";
+export type RetrievalMode = "http" | "browser";
 
 export interface Provenance {
   sourceUrl: string;
@@ -18,11 +19,15 @@ export interface EvidenceField<T> {
 export interface PageEvidence {
   url: string;
   status: number;
+  retrievalMode: RetrievalMode;
   title?: string;
+  siteName?: string;
   description?: string;
   canonicalUrl?: string;
   headings: string[];
   paragraphs: string[];
+  addressBlocks: string[];
+  mailtoEmails: string[];
   links: Array<{ href: string; text: string }>;
   jsonLd: unknown[];
   text: string;
@@ -46,6 +51,7 @@ export interface BrandBrainCandidate {
   topics: EvidenceField<string[]>;
   contactEmails: EvidenceField<string[]>;
   socialLinks: EvidenceField<string[]>;
+  developerLinks: EvidenceField<string[]>;
   websiteLinks: EvidenceField<string[]>;
 }
 
@@ -61,5 +67,6 @@ export interface CertificationResult {
     totalTextChars: number;
     totalLinks: number;
     totalJsonLd: number;
+    browserPages: number;
   };
 }
